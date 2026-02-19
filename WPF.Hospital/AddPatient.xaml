@@ -1,0 +1,39 @@
+﻿<Window x:Class="WPF.Hospital.AddPatient"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF.Hospital"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Add Patient" Height="200" Width="450">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Content="Add New Patient" FontWeight="Bold"></Label>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content="First Name"></Label>
+            <TextBox Grid.Column="1" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Label Grid.Row="1" Content="Last Name"></Label>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Label Grid.Row="2" Content="Age"></Label>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Label Grid.Row="3" Content="Birthdate"></Label>
+            <DatePicker Grid.Row="3" Grid.Column="1" Text="{Binding Birthdate, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+            <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Add Patient"></Button>
+        </Grid>
+    </Grid>
+</Window>
