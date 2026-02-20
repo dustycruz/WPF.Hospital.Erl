@@ -12,32 +12,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPF.Hospital.Service.Interface;
-using WPF.Hospital.ViewModel;
 
 namespace WPF.Hospital
 {
     /// <summary>
-    /// Interaction logic for AllPatients.xaml
+    /// Interaction logic for DeletePatient.xaml
     /// </summary>
-    public partial class AllPatients : Window
+    public partial class DeletePatient : Window
     {
         private readonly IPatientService _patientService;
-        public AllPatients(IPatientService patientService)
+        public DeletePatient(IPatientService patientService)
         {
             InitializeComponent();
             _patientService = patientService;
-            DataContext = new
-            {
-                Patients = _patientService.GetAll()
-                    .Select(p => new PatientViewModel()
-                    {
-                        Id = p.Id,
-                        FirstName = p.FirstName,
-                        LastName = p.LastName,
-                        Age = p.Age.ToString(),
-                        Birthdate = p.BirthDate
-                    })
-            };
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            _patientService.Delete(Convert.ToInt32(tbPatientId.Text));
+            MessageBox.Show("Patient Deleted Successfully!");
         }
     }
 }

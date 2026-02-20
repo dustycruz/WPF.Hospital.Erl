@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF.Hospital.Service.Interface;
 using WPF.Hospital.ViewModel;
 
 namespace WPF.Hospital
@@ -20,10 +21,25 @@ namespace WPF.Hospital
     /// </summary>
     public partial class AddPatient : Window
     {
-        public AddPatient()
+        private readonly IPatientService _patientService;
+        public AddPatient(IPatientService patientService)
         {
             InitializeComponent();
+            _patientService = patientService;
             DataContext = new PatientViewModel { Birthdate = DateTime.Now };
+        }
+
+        private void btnAddPatient_Click(object sender, RoutedEventArgs e)
+        {
+            _patientService.Add(new DTO.Patient()
+            {
+                FirstName = ((PatientViewModel)DataContext).FirstName,
+                LastName = ((PatientViewModel)DataContext).LastName,
+                Age = Convert.ToInt32(((PatientViewModel)DataContext).Age),
+                BirthDate = ((PatientViewModel)DataContext).Birthdate
+
+            });
+            MessageBox.Show("Patient Added Sucessfully");
         }
     }
 }

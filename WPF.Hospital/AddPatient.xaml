@@ -33,7 +33,7 @@
             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label Grid.Row="3" Content="Birthdate"></Label>
             <DatePicker Grid.Row="3" Grid.Column="1" Text="{Binding Birthdate, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
-            <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Add Patient"></Button>
+            <Button x:Name="btnAddPatient" Grid.Row="4" Grid.ColumnSpan="2" Content="Add Patient" Click="btnAddPatient_Click"></Button>
         </Grid>
     </Grid>
 </Window>
