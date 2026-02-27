@@ -20,7 +20,7 @@ namespace WPF.Hospital.Service
             _patientRepository = patientRepository;
         }
 
-        public (bool Ok, string Message) Create(Patient patient)
+        private (bool Ok, string Message) ValidatePatient(Patient patient, bool isUpdate = false)
         {
             if (patient == null)
                 return (false, "Patient cannot be empty.");
@@ -49,10 +49,20 @@ namespace WPF.Hospital.Service
                 .FirstOrDefault(p =>
                     p.FirstName.Equals(patient.FirstName, StringComparison.OrdinalIgnoreCase) &&
                     p.LastName.Equals(patient.LastName, StringComparison.OrdinalIgnoreCase) &&
-                    p.Birthdate.Date == patient.BirthDate.Date);
+                    p.Birthdate.Date == patient.BirthDate.Date &&
+                    (!isUpdate || p.Id != patient.Id));
 
             if (existing != null)
                 return (false, "Duplicate patient exists.");
+
+            return (true, string.Empty);
+        }
+
+        public (bool Ok, string Message) Create(Patient patient)
+        {
+            var validation = ValidatePatient(patient);
+            if (!validation.Ok)
+                return validation;
 
             try
             {
@@ -130,19 +140,14 @@ namespace WPF.Hospital.Service
 
         public (bool Ok, string Message) Update(Patient patient)
         {
-            if (patient == null)
-                return (false, "Patient cannot be empty.");
-
-            var existingPatient = _patientRepository.Get(patient.Id); 
+            var existingPatient = _patientRepository.Get(patient.Id);
             if (existingPatient == null)
                 return (false, "Selected patient no longer exists.");
 
-            // Reuse same validation logic as Create
-            var validation = Create(patient);
+            var validation = ValidatePatient(patient, true);
             if (!validation.Ok)
                 return validation;
 
-            // Update fields
             existingPatient.FirstName = patient.FirstName;
             existingPatient.LastName = patient.LastName;
             existingPatient.Age = patient.Age;
@@ -158,7 +163,7 @@ namespace WPF.Hospital.Service
             catch (Exception ex)
             {
                 return (false, $"Error updating patient: {ex.Message}");
-            }
+            }q
         }
     }
 }

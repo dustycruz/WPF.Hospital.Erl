@@ -30,7 +30,7 @@ namespace WPF.Hospital.Repository
 
         public History Get(int id)
         {
-            return _context.History.Find();
+            return _context.History.Find(id);
         }
 
         public IEnumerable<History> GetAll() => _context.History.ToList();

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WPF.Hospital.DTO;
 using WPF.Hospital.Model;
+using Medicine = WPF.Hospital.DTO.Medicine;
 
 namespace WPF.Hospital.Service.Interface
 {

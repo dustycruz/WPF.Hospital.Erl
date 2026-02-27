@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPF.Hospital.DTO;
 using WPF.Hospital.Model;
+using Doctor = WPF.Hospital.DTO.Doctor;
 
 namespace WPF.Hospital.Service.Interface
 {

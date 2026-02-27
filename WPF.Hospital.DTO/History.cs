@@ -9,7 +9,8 @@ namespace WPF.Hospital.DTO
     public class History
     {
         public int Id { get; set; }
-        public Patient Patient { get; set; }
-        public string Procedure {  get; set; }
+        public int PatientId { get; set; }
+        public int DoctorId { get; set; }
+        public string Procedure { get; set; }
     }
 }
