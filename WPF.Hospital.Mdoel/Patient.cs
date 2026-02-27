@@ -9,6 +9,6 @@ namespace WPF.Hospital.Model
     public class Patient : Person
     {
         public int Age { get; set; }
-        public DateTime Birthdate { get; set; } 
+        public DateTime BirthDate { get; set; } 
     }
 }

@@ -4,13 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WPF.Hospital.Service.Interface;
 using WPF.Hospital.ViewModel;
 
@@ -26,7 +19,7 @@ namespace WPF.Hospital
         {
             InitializeComponent();
             _patientService = patientService;
-            DataContext = new PatientViewModel { Birthdate = DateTime.Now };
+            DataContext = new PatientViewModel { Birthdate = DateTime.Today };
         }
 
         private void btnAddPatient_Click(object sender, RoutedEventArgs e)
@@ -39,7 +32,6 @@ namespace WPF.Hospital
                 BirthDate = ((PatientViewModel)DataContext).Birthdate
 
             });
-
 
             if (!result.Ok)
             {

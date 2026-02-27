@@ -118,7 +118,7 @@ namespace WPF.Hospital.Service
         public List<History> GetByPatient(int patientId)
         {
             return _historyRepository
-                .GetByPatient(patientId)
+                .GetByPatientId(patientId)
                 .Select(h => new History
                 {
                     Id = h.Id,

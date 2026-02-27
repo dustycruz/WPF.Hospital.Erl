@@ -6,19 +6,54 @@
         xmlns:local="clr-namespace:WPF.Hospital"
         mc:Ignorable="d"
         Title="All Patients" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-    <Grid Margin="5">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <!-- Input fields -->
+            <RowDefinition Height="*"/>
+            <!-- DataGrid -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="All Patients" FontWeight="Bold"></Label>
-        <Label Content="Search:" Grid.Row="1"></Label>
-        <TextBox Grid.Row="1" Grid.Column="1"></TextBox>
-        <DataGrid ItemsSource="{Binding Patients}" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,5,0,0"></DataGrid>
+
+        <!-- Patient Input Section -->
+        <GroupBox Header="Patient Information" Margin="0,0,0,10">
+            <StackPanel Orientation="Vertical" Margin="10">
+                <WrapPanel Margin="0,0,0,5">
+                    <TextBlock Text="First Name:" VerticalAlignment="Center" Width="80"/>
+                    <TextBox x:Name="txtFirstName" Width="200" />
+                    <TextBlock Text="Last Name:" VerticalAlignment="Center" Width="80" Margin="20,0,0,0"/>
+                    <TextBox x:Name="txtLastName" Width="200" />
+                </WrapPanel>
+
+                <WrapPanel Margin="0,0,0,5">
+                    <TextBlock Text="Age:" VerticalAlignment="Center" Width="80"/>
+                    <TextBox x:Name="txtAge" Width="100"/>
+                    <TextBlock Text="Birthdate:" VerticalAlignment="Center" Width="80" Margin="20,0,0,0"/>
+                    <DatePicker x:Name="dpBirthDate" Width="150"/>
+                </WrapPanel>
+
+                <WrapPanel Margin="0,15,0,0">
+                    <Button x:Name="btnAddPatient" Content="Add Patient" Width="100" Margin="0,0,10,0" Command="{Binding AddPatientCommand}" Click="Button_Click"/>
+                    <Button x:Name="btnUpdatePatient" Content="Update Patient" Width="100" Margin="0,0,10,0" Command="{Binding UpdatePatientCommand}" Click="Button_Click_1"/>
+                    <Button x:Name="btnDeletePatient" Content="Delete Patient" Width="100" Margin="0,0,10,0" Command="{Binding DeletePatientCommand}" Click="btnDeletePatient_Click"/>
+                    <Button x:Name="btnHistory" Content="View History" Width="100" Margin="0,0,10,0" Click="btnHistory_Click"/>
+                </WrapPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Patients DataGrid -->
+        <DataGrid x:Name="dgPatients" Grid.Row="1" AutoGenerateColumns="False"
+                  ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient, Mode=TwoWay}"
+                  CanUserAddRows="False" CanUserDeleteRows="False" Margin="0,0,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" IsReadOnly="True" Width="50"/>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"/>
+                <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="50"/>
+                <DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate, StringFormat=d}" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="Add Patient" Height="200" Width="450">
-    <Grid Margin="5">
+    <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Content="Add New Patient" FontWeight="Bold"></Label>
+        <Label Margin="1" Content="Add New Patient" FontWeight="Bold"></Label>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>

@@ -6,20 +6,25 @@
         xmlns:local="clr-namespace:WPF.Hospital"
         mc:Ignorable="d"
         Title="DeletePatient" Height="450" Width="800">
-    <Grid>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Label Content="Delete Patient" FontWeight="Bold"></Label>
-        <Label Content="DeleteId:" Grid.Row="1"></Label>
-        <TextBox x:Name="tbPatientId" Grid.Row="1" Grid.Column="1"></TextBox>
-        <DataGrid Grid.Row="2" Grid.ColumnSpan="2" Margin="0,5,0,0"></DataGrid>
-        <Button Name="btnDelete" Grid.Column="1" Content="Delete"  HorizontalAlignment="Left" Margin="23,68,0,0" Grid.Row="2" VerticalAlignment="Top" Height="259" Width="632" Click="Button_Click"/>
+
+        <!-- Input Section -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="Patient ID:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <TextBox x:Name="txtPatientId" Width="100"/>
+            <Button Content="Delete" Width="100" Margin="10,0,0,0" Click="btnDelete_Click"/>
+        </StackPanel>
+
+        <!-- Result Message -->
+        <TextBlock x:Name="lblResult" Grid.Row="1" Foreground="Red" FontWeight="Bold" Margin="0,0,0,10"/>
+
+        <!-- Optional: Instruction -->
+        <TextBlock Grid.Row="2" Text="Enter the Patient ID you want to delete and press Delete." 
+                   Foreground="Gray" FontStyle="Italic"/>
     </Grid>
 </Window>

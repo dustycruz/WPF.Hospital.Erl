@@ -18,11 +18,15 @@ namespace WPF.Hospital
     public partial class MainWindow : Window
     {
         private readonly IPatientService _patientService;
-        public MainWindow(IPatientService patientService)
+        private readonly IMedicineService _medicineService;
+        private readonly IHistoryService _historyService;
+        public MainWindow(IPatientService patientService, IMedicineService medicineService, IHistoryService historyService)
         {
             InitializeComponent();
             _patientService = patientService;
+            _medicineService = medicineService;
             this.WindowState = WindowState.Maximized;
+            _historyService = historyService;
         }
 
         private void btnAddPatient_Click(object sender, RoutedEventArgs e)
@@ -41,6 +45,30 @@ namespace WPF.Hospital
         {
             DeletePatient deletePatient = new DeletePatient(_patientService);
             deletePatient.ShowDialog();
+        }
+
+        private void btnUpdatePatient_Click(object sender, RoutedEventArgs e)
+        {
+            UpdatePatient updatePatient = new UpdatePatient(_patientService);
+            updatePatient.ShowDialog();
+        }
+
+        private void btnAddMedicine_Click(object sender, RoutedEventArgs e)
+        {
+            AddMedicine addMedicine = new AddMedicine(_medicineService);
+            addMedicine.ShowDialog();
+        }
+
+        private void btnDeleteMedicine_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteMedicine deleteMedicine = new DeleteMedicine(_medicineService);
+            deleteMedicine.ShowDialog();
+        }
+
+        private void btnAllMedicine_Click(object sender, RoutedEventArgs e)
+        {
+            AllMedicine allMedicine = new AllMedicine(_medicineService);
+            allMedicine.ShowDialog();
         }
     }
 }

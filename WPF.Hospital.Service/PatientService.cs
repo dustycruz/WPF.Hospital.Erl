@@ -30,26 +30,18 @@ namespace WPF.Hospital.Service
 
             if (string.IsNullOrWhiteSpace(patient.LastName))
                 return (false, "Last name must not be empty.");
-
             if (patient.Age <= 0)
-                return (false, "Age must be greater than 0.");
+                return (false, "Age must be greater than 0");
 
-            if (patient.BirthDate >= DateTime.Now.Date)
-                return (false, "Birthdate must be earlier than today.");
-
-            int calculatedAge = DateTime.Now.Year - patient.BirthDate.Year;
-            if (patient.BirthDate.Date > DateTime.Now.AddYears(-calculatedAge))
-                calculatedAge--;
-
-            if (patient.Age != calculatedAge)
-                return (false, "Age is not consistent with Birthdate.");
+            if (patient.BirthDate.Date > DateTime.Today)
+                return (false, "Birthdate cannot be in the future.");
 
             var existing = _patientRepository
                 .GetAll()
                 .FirstOrDefault(p =>
                     p.FirstName.Equals(patient.FirstName, StringComparison.OrdinalIgnoreCase) &&
                     p.LastName.Equals(patient.LastName, StringComparison.OrdinalIgnoreCase) &&
-                    p.Birthdate.Date == patient.BirthDate.Date &&
+                    p.BirthDate.Date == patient.BirthDate.Date &&
                     (!isUpdate || p.Id != patient.Id));
 
             if (existing != null)
@@ -66,12 +58,13 @@ namespace WPF.Hospital.Service
 
             try
             {
+                // No longer compute the age. Use the age provided.
                 var newPatient = new Model.Patient
                 {
                     FirstName = patient.FirstName,
                     LastName = patient.LastName,
-                    Age = patient.Age,
-                    Birthdate = patient.BirthDate
+                    BirthDate = patient.BirthDate,
+                    Age = patient.Age // Use the age directly from the Patient DTO
                 };
 
                 _patientRepository.Add(newPatient);
@@ -121,7 +114,7 @@ namespace WPF.Hospital.Service
                 FirstName = patientEntity.FirstName,
                 LastName = patientEntity.LastName,
                 Age = patientEntity.Age,
-                BirthDate = patientEntity.Birthdate
+                BirthDate = patientEntity.BirthDate
             };
         }
 
@@ -134,7 +127,7 @@ namespace WPF.Hospital.Service
                 FirstName = p.FirstName,
                 LastName = p.LastName,
                 Age = p.Age,
-                BirthDate = p.Birthdate
+                BirthDate = p.BirthDate
             }).ToList();
         }
 
@@ -150,8 +143,10 @@ namespace WPF.Hospital.Service
 
             existingPatient.FirstName = patient.FirstName;
             existingPatient.LastName = patient.LastName;
+            existingPatient.BirthDate = patient.BirthDate;
+
+            // Now we don't compute the age. Use the age directly from the Patient DTO.
             existingPatient.Age = patient.Age;
-            existingPatient.Birthdate = patient.BirthDate;
 
             try
             {
@@ -163,7 +158,7 @@ namespace WPF.Hospital.Service
             catch (Exception ex)
             {
                 return (false, $"Error updating patient: {ex.Message}");
-            }q
+            }
         }
     }
 }

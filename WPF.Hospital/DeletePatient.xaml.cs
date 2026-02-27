@@ -27,10 +27,45 @@ namespace WPF.Hospital
             _patientService = patientService;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            _patientService.Delete(Convert.ToInt32(tbPatientId.Text));
-            MessageBox.Show("Patient Deleted Successfully!");
+            // 1️⃣ Validate input
+            if (!int.TryParse(txtPatientId.Text, out int patientId))
+            {
+                lblResult.Text = "Please enter a valid numeric Patient ID.";
+                lblResult.Foreground = System.Windows.Media.Brushes.Red;
+                return;
+            }
+
+            // 2️⃣ Ask for confirmation
+            var confirm = MessageBox.Show(
+                $"Are you sure you want to delete patient with ID {patientId}?",
+                "Confirm Delete",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (confirm != MessageBoxResult.Yes)
+            {
+                lblResult.Text = "Delete cancelled.";
+                lblResult.Foreground = System.Windows.Media.Brushes.Orange;
+                return;
+            }
+
+            // 3️⃣ Call service to delete
+            var result = _patientService.Delete(patientId);
+
+            // 4️⃣ Show feedback
+            if (result.Ok)
+            {
+                lblResult.Text = $"Patient with ID {patientId} deleted successfully.";
+                lblResult.Foreground = System.Windows.Media.Brushes.Green;
+                txtPatientId.Clear();
+            }
+            else
+            {
+                lblResult.Text = $"Error: {result.Message}";
+                lblResult.Foreground = System.Windows.Media.Brushes.Red;
+            }
         }
     }
 }

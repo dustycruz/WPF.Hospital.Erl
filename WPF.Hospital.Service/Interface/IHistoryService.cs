@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WPF.Hospital.DTO;
 
+
 namespace WPF.Hospital.Service.Interface
 {
     public interface IHistoryService 
