@@ -33,8 +33,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="PatientMaintenance\MedicalHistory\Prescription\" />
-  </ItemGroup>
-
 </Project>

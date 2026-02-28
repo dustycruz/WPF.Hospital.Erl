@@ -32,7 +32,22 @@ namespace WPF.Hospital
         private void LoadPatientHistory()
         {
             var historyList = _historyService.GetByPatient(_patientId);
-            dgHistory.ItemsSource = historyList; 
+            dgMedicalHistory.ItemsSource = historyList; 
+        }
+
+        private void btnPrescription_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDeleteHistory(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAddHistory(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.Hospital.DoctorMaintenance;
 using WPF.Hospital.Service.Interface;
 
 namespace WPF.Hospital
@@ -50,12 +51,6 @@ namespace WPF.Hospital
             deletePatient.ShowDialog();
         }
 
-        private void btnUpdatePatient_Click(object sender, RoutedEventArgs e)
-        {
-            UpdatePatient updatePatient = new UpdatePatient(_patientService);
-            updatePatient.ShowDialog();
-        }
-
         private void btnAddMedicine_Click(object sender, RoutedEventArgs e)
         {
             AddMedicine addMedicine = new AddMedicine(_medicineService);
@@ -84,6 +79,12 @@ namespace WPF.Hospital
         {
             AllDoctor allDoctor = new AllDoctor(_doctorService);
             allDoctor.ShowDialog();
+        }
+
+        private void btnDeleteDoctor_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteDoctor deleteDoctor = new DeleteDoctor(_doctorService);
+            deleteDoctor.ShowDialog();
         }
     }
 }

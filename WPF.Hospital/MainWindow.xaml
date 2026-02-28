@@ -89,7 +89,7 @@
                        Margin="0,0,0,10"/>
 
                 <Button x:Name="btnAddDoctor" Content="Add Doctor" Click="btnAddDoctor_Click"/>
-                <Button x:Name="btnDeleteDoctor" Content="Delete Doctor"/>
+                <Button x:Name="btnDeleteDoctor" Content="Delete Doctor" Click="btnDeleteDoctor_Click"/>
                 <Button x:Name="btnAllDoctor" Content="All Doctors" Click="btnAllDoctor_Click"/>
             </StackPanel>
 

@@ -145,7 +145,6 @@ namespace WPF.Hospital.Service
             existingPatient.LastName = patient.LastName;
             existingPatient.BirthDate = patient.BirthDate;
 
-            // Now we don't compute the age. Use the age directly from the Patient DTO.
             existingPatient.Age = patient.Age;
 
             try

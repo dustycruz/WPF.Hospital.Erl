@@ -6,7 +6,36 @@
         xmlns:local="clr-namespace:WPF.Hospital"
         mc:Ignorable="d"
         Title="MedicalHistory" Height="450" Width="800">
-    <Grid>
-        <DataGrid x:Name="dgHistory" AutoGenerateColumns="True" Margin="10"/>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="Medical History" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock Text="Patient Information" FontWeight="SemiBold" Margin="0,10,0,5"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" RenderTransformOrigin="0.557,0.528">
+                <TextBlock Text="Patient ID: " VerticalAlignment="Center" Width="203"/>
+                <TextBlock Text="Name: " VerticalAlignment="Center" Margin="20,0,0,0" Width="108"/>
+                <TextBlock x:Name="txtPatientName" Width="145"/>
+            </StackPanel>
+        </StackPanel>
+        
+        <DataGrid x:Name="dgMedicalHistory" Grid.Row="1" AutoGenerateColumns="False" 
+                  CanUserAddRows="False" CanUserDeleteRows="False" Margin="0,0,0,10" IsReadOnly="True"
+                  ItemsSource="{Binding HistoryList}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Doctor Name" Binding="{Binding DoctorFullName}" Width="*"/>
+                <DataGridTextColumn Header="Procedure" Binding="{Binding Procedure}" Width="*"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=d}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,61,11,13" Width="259">
+            <Button Content="Add History" Height="22" Width="73" Margin="5" Click="btnAddHistory"/>
+            <Button Content="Delete History" Height="22" Width="82" Margin="5" Click="btnDeleteHistory"/>
+            <Button x:Name="btnPrescription" Content="Prescription" Height="22" Width="75" Margin="5" Click="btnPrescription_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
