@@ -26,14 +26,17 @@ namespace WPF.Hospital.Service
                 return (false, "Doctor cannot be empty");
             if (string.IsNullOrWhiteSpace(doctor.FirstName))
                 return (false, "Doctor First Name cannot be empty");
-            if (String.IsNullOrWhiteSpace(doctor.LastName))
+            if (string.IsNullOrWhiteSpace(doctor.LastName))
                 return (false, "Doctor Last Name cannot be empty");
+
             var exists = _doctorRepository
                 .GetAll()
                 .Any(d => d.FirstName.Equals(doctor.FirstName, StringComparison.OrdinalIgnoreCase) &&
-                    d.LastName.Equals(doctor.LastName, StringComparison.OrdinalIgnoreCase));
+                          d.LastName.Equals(doctor.LastName, StringComparison.OrdinalIgnoreCase));
+
             if (exists)
-                return (false, "Doctor already exsist");
+                return (false, "Doctor already exists");
+
             try
             {
                 var newDoctor = new Model.Doctor
@@ -41,12 +44,14 @@ namespace WPF.Hospital.Service
                     FirstName = doctor.FirstName,
                     LastName = doctor.LastName
                 };
+
                 _doctorRepository.Add(newDoctor);
                 _doctorRepository.Save();
+
+                // Ensure that the ID is correctly set after the doctor is added to the database
+                doctor.Id = newDoctor.Id; // Ensure the DTO gets the assigned ID
                 return (true, "Doctor created successfully");
-
             }
-
             catch (Exception ex)
             {
                 return (false, $"Error creating doctor: {ex.Message}");
@@ -98,6 +103,7 @@ namespace WPF.Hospital.Service
             var doctor = _doctorRepository.GetAll();
             return doctor.Select(d => new DTO.Doctor
             {
+                Id = d.Id,
                 FirstName = d.FirstName,
                 LastName = d.LastName
             }).ToList();
@@ -109,28 +115,31 @@ namespace WPF.Hospital.Service
                 return (false, "Doctor must be selected");
 
             if (string.IsNullOrWhiteSpace(doctor.FirstName))
-                return (false, "Doctor FirstName must not be empty");
+                return (false, "Doctor First Name must not be empty");
 
-            var existing = _doctorRepository.Get(doctor.Id);
-            if (existing == null)
-                return (false, "Selected doctor no longer exist");
+            var existingDoctor = _doctorRepository.Get(doctor.Id);  // Ensure you're fetching the correct doctor by ID
+            if (existingDoctor == null)
+                return (false, "Selected doctor no longer exists");
 
             if (string.IsNullOrWhiteSpace(doctor.LastName))
-                return (false, "Doctor LastName must not be empty");
+                return (false, "Doctor Last Name must not be empty");
 
             var duplicate = _doctorRepository
                 .GetAll()
                 .Any(d => d.FirstName.Equals(doctor.FirstName, StringComparison.OrdinalIgnoreCase) &&
-                    d.LastName.Equals(doctor.LastName, StringComparison.OrdinalIgnoreCase) &&
-                    d.Id != doctor.Id);
+                          d.LastName.Equals(doctor.LastName, StringComparison.OrdinalIgnoreCase) &&
+                          d.Id != doctor.Id);
+
             if (duplicate)
-                return (false, "Another Doctor with the same name already exist");
+                return (false, "Another doctor with the same name already exists");
+
             try
             {
-                existing.FirstName = doctor.FirstName;
-                existing.LastName = doctor.LastName;
-                existing.Id = doctor.Id;
-                return (true, "Doctor Updated successfully");
+                existingDoctor.FirstName = doctor.FirstName;
+                existingDoctor.LastName = doctor.LastName;
+                _doctorRepository.Update(existingDoctor);
+                _doctorRepository.Save();
+                return (true, "Doctor updated successfully");
             }
             catch (Exception ex)
             {

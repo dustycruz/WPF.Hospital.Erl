@@ -55,7 +55,27 @@ namespace WPF.Hospital.Service
 
         public (bool Ok, string Message) Delete(int id)
         {
-            throw new NotImplementedException();
+            var medicine = _medicineRepository.Get(id);
+            if (medicine == null)
+                return (false, "Medicine not found.");
+
+            var isInUse = _prescriptionRepository
+                .GetAll()
+                .Any(p => p.MedicineId == id); 
+
+            if (isInUse)
+                return (false, "Cannot delete. Medicine is used in prescriptions.");
+
+            try
+            {
+                _medicineRepository.Delete(id); 
+                _medicineRepository.Save();
+                return (true, "Medicine deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Error deleting medicine: {ex.Message}");
+            }
         }
 
         public DTO.Medicine? Get(int id)
@@ -74,10 +94,12 @@ namespace WPF.Hospital.Service
         public List<DTO.Medicine> GetAll()
         {
             var medicine = _medicineRepository.GetAll();
+
             return medicine.Select(m => new DTO.Medicine
             {
+                Id = m.Id,        
                 Name = m.Name,
-                Brand = m.Brand,
+                Brand = m.Brand
             }).ToList();
         }
 

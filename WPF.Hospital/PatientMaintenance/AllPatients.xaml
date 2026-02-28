@@ -35,8 +35,8 @@
                 </WrapPanel>
 
                 <WrapPanel Margin="0,15,0,0">
-                    <Button x:Name="btnAddPatient" Content="Add Patient" Width="100" Margin="0,0,10,0" Command="{Binding AddPatientCommand}" Click="Button_Click"/>
-                    <Button x:Name="btnUpdatePatient" Content="Update Patient" Width="100" Margin="0,0,10,0" Command="{Binding UpdatePatientCommand}" Click="Button_Click_1"/>
+                    <Button x:Name="btnAddPatient" Content="Add Patient" Width="100" Margin="0,0,10,0" Command="{Binding AddPatientCommand}" Click="btnAddPatientClick"/>
+                    <Button x:Name="btnUpdatePatient" Content="Update Patient" Width="100" Margin="0,0,10,0" Command="{Binding UpdatePatientCommand}" Click="btnUpdatePatientClick"/>
                     <Button x:Name="btnDeletePatient" Content="Delete Patient" Width="100" Margin="0,0,10,0" Command="{Binding DeletePatientCommand}" Click="btnDeletePatient_Click"/>
                     <Button x:Name="btnHistory" Content="View History" Width="100" Margin="0,0,10,0" Click="btnHistory_Click"/>
                 </WrapPanel>
@@ -46,7 +46,7 @@
         <!-- Patients DataGrid -->
         <DataGrid x:Name="dgPatients" Grid.Row="1" AutoGenerateColumns="False"
                   ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient, Mode=TwoWay}"
-                  CanUserAddRows="False" CanUserDeleteRows="False" Margin="0,0,0,0">
+                  CanUserAddRows="False" CanUserDeleteRows="False" Margin="0,0,0,0" IsReadOnly="True" SelectionChanged="dgPatients_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" IsReadOnly="True" Width="50"/>
                 <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*"/>

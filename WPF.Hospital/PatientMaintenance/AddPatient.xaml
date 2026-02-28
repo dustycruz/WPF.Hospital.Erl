@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPF.Hospital"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Add Patient" Height="200" Width="450">
+        Title="Add Patient" Height="250" Width="450">
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
@@ -33,7 +33,7 @@
             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Label Grid.Row="3" Content="Birthdate"></Label>
             <DatePicker Grid.Row="3" Grid.Column="1" Text="{Binding Birthdate, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
-            <Button x:Name="btnAddPatient" Grid.Row="4" Grid.ColumnSpan="2" Content="Add Patient" Click="btnAddPatient_Click"></Button>
+            <Button x:Name="btnAddPatient" Grid.Row="4" Grid.ColumnSpan="2" Content="Add Patient" Click="btnAddPatient_Click" Foreground="White" Background="#4CAF50" FontWeight="Bold"></Button>
         </Grid>
     </Grid>
 </Window>

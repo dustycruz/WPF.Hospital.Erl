@@ -36,7 +36,14 @@ namespace WPF.Hospital.Repository
 
         public void Update(Doctor entity)
         {
-            _context.Doctor.Update(entity);
+            var DoctorUpdate = _context.Doctor.Find(entity.Id); 
+            if (DoctorUpdate != null)
+            {
+                DoctorUpdate.FirstName = entity.FirstName;
+                DoctorUpdate.LastName = entity.LastName;
+
+                _context.SaveChanges();
+            }
         }
     }
 }

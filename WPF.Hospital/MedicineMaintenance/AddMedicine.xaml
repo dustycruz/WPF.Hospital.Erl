@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.Hospital"
         mc:Ignorable="d"
-        Title="AddMedicine" Height="250" Width="500" WindowStartupLocation="CenterScreen">
+        Title="AddMedicine" Height="250" Width="450" WindowStartupLocation="CenterScreen">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -15,19 +15,19 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="223"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Add New Medicine" FontWeight="Bold" FontSize="16" Grid.ColumnSpan="2" />
+        <Label Content="Add New Medicine" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="16" Grid.ColumnSpan="2" />
 
         <!-- Medicine Name -->
         <Label Content="Medicine Name" Grid.Row="1" VerticalAlignment="Center" Height="26"/>
-        <TextBox x:Name="txtMedicineName" Grid.Row="1" Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Margin="5" x:Name="txtMedicineName" Grid.Row="1" Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
 
         <!-- Medicine Brand -->
         <Label Content="Brand" Grid.Row="2" VerticalAlignment="Center" Height="26"/>
-        <TextBox x:Name="txtBrand" Grid.Row="2" Grid.Column="1" Text="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Margin="5" x:Name="txtBrand" Grid.Row="2" Grid.Column="1" Text="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Button x:Name="btnAddMedicine" Grid.Row="3" Margin="2,4,2,0" Content="Add Medicine" Click="btnAddMedicine_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnAddMedicine" Foreground="White" Background="#4CAF50" FontWeight="Bold" Grid.Row="3" Margin="2,4,2,0" Content="Add Medicine" Click="btnAddMedicine_Click" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

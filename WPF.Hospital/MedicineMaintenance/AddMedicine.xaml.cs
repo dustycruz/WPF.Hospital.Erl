@@ -17,34 +17,35 @@ namespace WPF.Hospital
         {
             InitializeComponent();
             _medicineService = medicineService;
+            DataContext = new MedicineViewModel();
         }
 
         private void btnAddMedicine_Click(object sender, RoutedEventArgs e)
         {
             var viewModel = (MedicineViewModel)DataContext;
 
-            // Check for validation - ensure Name and Brand are provided
+            // Validation
             if (string.IsNullOrWhiteSpace(viewModel.Name) || string.IsNullOrWhiteSpace(viewModel.Brand))
             {
                 MessageBox.Show("Please provide both the medicine name and brand.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Now map the ViewModel data to DTO object
+            // Map ViewModel to DTO
             var newMedicine = new DTO.Medicine
             {
                 Name = viewModel.Name,
                 Brand = viewModel.Brand
             };
 
-            // Call the service to create the medicine
+            // Call service
             var result = _medicineService.Create(newMedicine);
 
             // Handle result
             if (result.Ok)
             {
                 MessageBox.Show("Medicine added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                ClearFields();  // Clear the input fields after adding the medicine
+                ClearFields();
             }
             else
             {

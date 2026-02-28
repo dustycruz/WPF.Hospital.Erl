@@ -1,0 +1,83 @@
+﻿<Window x:Class="WPF.Hospital.AllDoctor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF.Hospital"
+        mc:Ignorable="d"
+        Title="AllDoctor" Height="450" Width="995">
+    <Grid Margin="20">
+        <!-- ROW STRUCTURE -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Title -->
+            <RowDefinition Height="Auto"/>
+            <!-- Form -->
+            <RowDefinition Height="*"/>
+            <!-- DataGrid -->
+        </Grid.RowDefinitions>
+
+        <!-- ================= TITLE ================= -->
+        <TextBlock Text="All Doctors"
+               FontSize="22"
+               FontWeight="Bold"
+               HorizontalAlignment="Center"
+               Margin="0,0,0,20"/>
+
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="74"/>
+                <ColumnDefinition Width="236"/>
+                <ColumnDefinition Width="159"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="First Name:" VerticalAlignment="Center" Height="26"/>
+            <TextBox x:Name="txtFirstName"
+                 Grid.Column="1"
+                 Margin="5,5,5,5"></TextBox>
+
+            <Label Content="Last Name:"
+               Grid.Column="2"
+               VerticalAlignment="Center" Height="26"></Label>
+            <TextBox x:Name="txtLastName"
+                 Grid.Column="2"
+                 Margin="80,5,3,5" Grid.ColumnSpan="2"></TextBox>
+
+            <StackPanel Grid.Column="4"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center" Width="300">
+
+                <Button x:Name="btnAddDoctor"
+                    Content="Add"
+                    Width="80"
+                    Margin="5,5,20,5" Click="btnAddDoctor_Click"></Button>
+
+                <Button x:Name="btnUpdateDoctor"
+                    Content="Update"
+                    Width="80"
+                    Margin="5,5,20,5" Click="btnUpdateDoctor_Click"></Button>
+
+                <Button x:Name="btnDeleteDoctor"
+                    Content="Delete"
+                    Width="80"
+                    Margin="5,5,20,5" Click="btnDeleteDoctor_Click"></Button>
+            </StackPanel>
+        </Grid>
+        
+        <DataGrid x:Name="dgDoctors"
+          Grid.Row="2"
+          AutoGenerateColumns="False"
+          SelectionMode="Single"
+          IsReadOnly="True"
+          Margin="0,10,0,0"
+          SelectionChanged="dgDoctors_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="80"></DataGridTextColumn>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
