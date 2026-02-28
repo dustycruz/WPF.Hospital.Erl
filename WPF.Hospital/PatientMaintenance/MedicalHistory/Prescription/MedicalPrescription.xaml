@@ -10,32 +10,44 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="0,0,0,10">
             <TextBlock Text="Prescription History" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-            <TextBlock Text="Patient Information" FontWeight="SemiBold" Margin="0,10,0,5"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <TextBlock Text="Patient ID: " VerticalAlignment="Center" Width="172"/>
-                <TextBlock x:Name="txtPatientId" VerticalAlignment="Center" Width="121"/>
-                <TextBlock Text="Name: " VerticalAlignment="Center" Margin="20,0,0,0" Width="76"/>
-                <TextBlock x:Name="txtPatientName" VerticalAlignment="Center" Width="109"/>
-            </StackPanel>
         </StackPanel>
 
         <DataGrid x:Name="dgMedicalHistory" Grid.Row="1" AutoGenerateColumns="False" 
               CanUserAddRows="False" CanUserDeleteRows="False" Margin="0,0,0,10" IsReadOnly="True"
-              ItemsSource="{Binding HistoryList}">
+              ItemsSource="{Binding PrescriptionList}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Doctor Name" Binding="{Binding DoctorFullName}" Width="*"/>
-                <DataGridTextColumn Header="Procedure" Binding="{Binding Procedure}" Width="*"/>
-                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=d}" Width="150"/>
+                <DataGridTextColumn Header="Medicine" Binding="{Binding Medicine.Name}" Width="*"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="100"/>
+                <DataGridTextColumn Header="Frequency" Binding="{Binding Frequency}" Width="150"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,56,3,320" Grid.RowSpan="2" Width="227">
-            <Button x:Name="btnAddPrescriptiop" Content="Add Prescription" Height="22" Width="101" Margin="5" Click="btnAddPrescriptiop_Click"/>
-            <Button x:Name="btnDeletePrescription" Content="Delete Prescription" Height="22" Width="107" Margin="5"/>
-        </StackPanel>
+        <!-- Add Prescription Section -->
+        <GroupBox Header="Add New Prescription" Grid.Row="2" Margin="0,10,0,0">
+            <StackPanel Orientation="Vertical" Margin="10">
+                <WrapPanel Margin="0,0,0,5">
+                    <TextBlock Text="Medicine:" VerticalAlignment="Center" Width="100"/>
+                    <ComboBox x:Name="cbMedicine" Width="200" />
+                    <TextBlock Text="Quantity:" VerticalAlignment="Center" Width="80" Margin="20,0,0,0"/>
+                    <TextBox x:Name="txtQuantity" Width="100" />
+                </WrapPanel>
+
+                <WrapPanel Margin="0,0,0,5">
+                    <TextBlock Text="Frequency:" VerticalAlignment="Center" Width="100"/>
+                    <TextBox x:Name="txtFrequency" Width="300" />
+                </WrapPanel>
+
+                <WrapPanel Margin="0,10,0,0">
+                    <Button x:Name="btnAddPrescriptiop" Content="Add Prescription" Height="30" Width="120" Margin="5" Click="btnAddPrescriptiop_Click"/>
+                    <Button x:Name="btnDeletePrescription" Content="Delete Prescription" Height="30" Width="130" Margin="5" Click="btnDeletePrescription_Click"/>
+                    <Button x:Name="btnClearFields" Content="Clear Fields" Height="30" Width="100" Margin="5" Click="btnClearFields_Click"/>
+                </WrapPanel>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </Window>

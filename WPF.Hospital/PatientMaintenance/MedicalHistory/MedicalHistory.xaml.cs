@@ -16,9 +16,6 @@ using WPF.Hospital.PatientMaintenance.MedicalHistory.Prescription;
 
 namespace WPF.Hospital
 {
-    /// <summary>
-    /// Interaction logic for MedicalHistory.xaml
-    /// </summary>
     public partial class MedicalHistory : Window
     {
         private readonly IHistoryService _historyService;
@@ -56,14 +53,38 @@ namespace WPF.Hospital
             }
         }
 
-        private void btnDeleteHistory(object sender, RoutedEventArgs e)
-        {
 
+        private void btnAddPrescription_Click(object sender, RoutedEventArgs e)
+        {
+            // This button might be for opening the MedicalPrescription window
+            // which should be done in MedicalHistory, not as a separate button click
         }
 
-        private void btnAddHistory(object sender, RoutedEventArgs e)
+        private void btnDeletePrescription_Click(object sender, RoutedEventArgs e)
         {
+            if (dgMedicalHistory.SelectedItem is DTO.History selectedHistory)
+            {
+                var result = _historyService.Delete(selectedHistory.Id);
+                if (result.Ok)
+                {
+                    MessageBox.Show(result.Message);
+                    LoadPatientHistory();
+                }
+                else
+                {
+                    MessageBox.Show(result.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a history record to delete.");
+            }
+        }
 
+        private void btnClearFields_Click(object sender, RoutedEventArgs e)
+        {
+            // Clear input fields if they exist
+            // This depends on what input fields you have in MedicalHistory
         }
     }
 }

@@ -31,7 +31,45 @@ namespace WPF.Hospital.PatientMaintenance.MedicalHistory.Prescription
 
         private void btnAddPrescriptiop_Click(object sender, RoutedEventArgs e)
         {
-            LoadPatientPrescription();
+            if (cbMedicine.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a medicine.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtQuantity.Text) || string.IsNullOrWhiteSpace(txtFrequency.Text))
+            {
+                MessageBox.Show("Please fill in all fields.");
+                return;
+            }
+
+            if (!int.TryParse(txtQuantity.Text, out int quantity) || quantity <= 0)
+            {
+                MessageBox.Show("Please enter a valid quantity.");
+                return;
+            }
+
+            var selectedMedicine = (DTO.Medicine)cbMedicine.SelectedItem;
+
+            var newPrescription = new DTO.Prescription
+            {
+                HistoryId = _historyId,
+                MedicineId = selectedMedicine.Id,
+                Quantity = quantity,
+                Frequency = txtFrequency.Text
+            };
+
+            var result = _prescriptionService.Create(newPrescription);
+            if (result.Ok)
+            {
+                MessageBox.Show(result.Message);
+                ClearFields();
+                LoadPatientPrescription();
+            }
+            else
+            {
+                MessageBox.Show(result.Message);
+            }
         }
 
         private void btnDeletePrescription_Click(object sender, RoutedEventArgs e)
@@ -53,6 +91,18 @@ namespace WPF.Hospital.PatientMaintenance.MedicalHistory.Prescription
             {
                 MessageBox.Show("Please select a prescription to delete.");
             }
+        }
+
+        private void btnClearFields_Click(object sender, RoutedEventArgs e)
+        {
+            ClearFields();
+        }
+
+        private void ClearFields()
+        {
+            cbMedicine.SelectedIndex = -1;
+            txtQuantity.Text = string.Empty;
+            txtFrequency.Text = string.Empty;
         }
     }
 }
