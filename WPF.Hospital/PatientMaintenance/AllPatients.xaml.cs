@@ -53,37 +53,27 @@ namespace WPF.Hospital
         {
             if (dgPatients.SelectedItem is PatientViewModel selectedPatient)
             {
-                var confirmResult = MessageBox.Show($"Are you sure you want to delete {selectedPatient.FirstName} {selectedPatient.LastName}?",
-                    "Confirm Delete", MessageBoxButton.YesNo);
-                if (confirmResult == MessageBoxResult.Yes)
-                {
-                    var result = _patientService.Delete(selectedPatient.Id);
-                    if (result.Ok)
-                    {
-                        MessageBox.Show(result.Message);
-                        LoadPatients(); // Reload patients grid after deletion.
-                    }
-                    else
-                    {
-                        MessageBox.Show(result.Message);
-                    }
-                }
+                var medicalHistoryWindow = new MedicalHistory(
+                    _historyService,
+                    selectedPatient.Id
+                );
+                medicalHistoryWindow.ShowDialog();
             }
             else
             {
-                MessageBox.Show("Please select a patient to delete.");
+                MessageBox.Show("Please select a patient first.");
             }
         }
 
         private void btnHistory_Click(object sender, RoutedEventArgs e)
         {
-            if (dgPatients.SelectedItem is DTO.Patient selectedPatient)
+            if (dgPatients.SelectedItem is PatientViewModel selectedPatient)
             {
                 var medicalHistoryWindow = new MedicalHistory(
-                    _historyService,    
-                    selectedPatient.Id  
+                    _historyService,
+                    selectedPatient.Id
                 );
-                medicalHistoryWindow.ShowDialog();  
+                medicalHistoryWindow.ShowDialog();
             }
             else
             {
