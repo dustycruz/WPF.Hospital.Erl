@@ -34,7 +34,7 @@
         </DataGrid>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,56,3,320" Grid.RowSpan="2" Width="227">
-            <Button x:Name="btnAddPrescriptiop" Content="Add Prescription" Height="22" Width="101" Margin="5"/>
+            <Button x:Name="btnAddPrescriptiop" Content="Add Prescription" Height="22" Width="101" Margin="5" Click="btnAddPrescriptiop_Click"/>
             <Button x:Name="btnDeletePrescription" Content="Delete Prescription" Height="22" Width="107" Margin="5"/>
         </StackPanel>
     </Grid>

@@ -25,13 +25,16 @@ namespace WPF.Hospital
     {
         private readonly IPatientService _patientService;
         private readonly IHistoryService _historyService;
-        public AllPatients(IPatientService patientService, IHistoryService historyService)
+        private readonly IPrescriptionService _prescriptionService;  // Add this
+
+        public AllPatients(IPatientService patientService, IHistoryService historyService, IPrescriptionService prescriptionService)
         {
             InitializeComponent();
             _patientService = patientService;
+            _historyService = historyService;
+            _prescriptionService = prescriptionService;  // Add this
             DataContext = this;
             LoadPatients();
-            _historyService = historyService;
         }
 
         private void LoadPatients()
@@ -53,15 +56,25 @@ namespace WPF.Hospital
         {
             if (dgPatients.SelectedItem is PatientViewModel selectedPatient)
             {
-                var medicalHistoryWindow = new MedicalHistory(
-                    _historyService,
-                    selectedPatient.Id
-                );
-                medicalHistoryWindow.ShowDialog();
+                var confirmResult = MessageBox.Show($"Are you sure you want to delete {selectedPatient.FirstName} {selectedPatient.LastName}?",
+                    "Confirm Delete", MessageBoxButton.YesNo);
+                if (confirmResult == MessageBoxResult.Yes)
+                {
+                    var result = _patientService.Delete(selectedPatient.Id);
+                    if (result.Ok)
+                    {
+                        MessageBox.Show(result.Message);
+                        LoadPatients(); // Reload patients grid after deletion.
+                    }
+                    else
+                    {
+                        MessageBox.Show(result.Message);
+                    }
+                }
             }
             else
             {
-                MessageBox.Show("Please select a patient first.");
+                MessageBox.Show("Please select a patient to delete.");
             }
         }
 
@@ -71,6 +84,7 @@ namespace WPF.Hospital
             {
                 var medicalHistoryWindow = new MedicalHistory(
                     _historyService,
+                    _prescriptionService,  // Add this parameter
                     selectedPatient.Id
                 );
                 medicalHistoryWindow.ShowDialog();
